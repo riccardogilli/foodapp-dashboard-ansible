@@ -1,0 +1,39 @@
+
+- hosts: localhost
+  tasks:
+    - name: Create a new network called dashboard-net
+      openstack.cloud.network:
+        name: dashboard-net
+    - name: Create a new subnet called dashboard-subnet
+      openstack.cloud.subnet:
+        state: present
+        network_name: dashboard-net
+        name: dashboard-subnet
+        cidr: 10.1.0.0/24
+        dns_nameservers:
+          - 1.1.1.1
+          - 1.0.0.1
+    - name: Create a new security group called ssh-in
+      openstack.cloud.security_group:
+        state: present
+        name: ssh-in
+        description: security group for allowing ssh connections
+    - name: Adding SSH incoming connections rule
+      openstack.cloud.security_group_rule:
+        security_group: ssh-in
+        protocol: tcp
+        port_range_min: 22
+        port_range_max: 22
+        remote_ip_prefix: 0.0.0.0/0
+    - name: Create a new security group called dashboard-sg
+      openstack.cloud.security_group:
+        state: present
+        name: dashboard-sg
+        description: security group for dashboard service
+    - name: Adding WEB incoming rule
+      openstack.cloud.security_group_rule:
+        security_group: dashboard-sg
+        protocol: tcp
+        port_range_min: 80
+        port_range_max: 80
+        remote_ip_prefix: 0.0.0.0/0
