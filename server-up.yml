@@ -22,10 +22,11 @@
         name: my_openstack_vm
         groups: openstack_vms
         ansible_host: "{{ my_vm.server.public_v4 }}"
-    - name: Pause
-      pause:
-        seconds: 90
-
+    #- name: Pause
+    #  pause:
+    #    seconds: 90
+    - name: Checking when the SSH server becomes available
+      local_action: "wait_for port=22 host={{ my_vm.server.public_v4 }}"
 - hosts: openstack_vms
   remote_user: ubuntu
   become: true
