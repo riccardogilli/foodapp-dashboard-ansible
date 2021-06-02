@@ -75,3 +75,5 @@
       copy:
         src: ./.env.backend
         dest: /home/ubuntu/dashboard-backend/.env
+    - name: Run dashboard backend
+      shell: cd /home/ubuntu/dashboard-backend; nohup node src/app.js </dev/null >/dev/null 2>&1 &
