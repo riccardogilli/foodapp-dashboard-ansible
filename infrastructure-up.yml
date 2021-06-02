@@ -41,6 +41,6 @@
       openstack.cloud.router:
         state: present
         name: dashboard-router
-        network: dashboard-net
+        network: public
         interfaces:
           - dashboard-subnet
