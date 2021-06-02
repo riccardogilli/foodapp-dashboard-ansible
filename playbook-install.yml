@@ -73,4 +73,4 @@
     - name: Configure dashboard backend
       copy:
         src: ./.env.backend
-        dest: /home/ubuntu/dashboard-backend
+        dest: /home/ubuntu/dashboard-backend/.env
