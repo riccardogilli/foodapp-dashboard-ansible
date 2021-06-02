@@ -57,3 +57,11 @@
       apt:
         name: nodejs
         state: present
+    - name: Clone dashboard frontend
+      git:
+        repo: https://github.com/riccardogilli/foodapp-dashboard-frontend.git
+        dest: /var/www/frontend
+    - name: Deploy dashboard frontend
+      copy:
+        src: /var/www/frontend/dist/
+        dest: /var/www/html
