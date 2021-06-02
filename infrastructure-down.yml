@@ -1,0 +1,31 @@
+
+- hosts: localhost
+  tasks:
+    - name: Removing keypair
+      openstack.cloud.keypair:
+        state: absent
+        name: ansible_key
+    - name: Removing network dashboard-net
+      openstack.cloud.network:
+        name: dashboard-net
+        state: absent
+    - name: Removing subnet dashboard-subnet
+      openstack.cloud.subnet:
+        state: absent
+        network_name: dashboard-net
+    - name: Removing security group ssh-in
+      openstack.cloud.security_group:
+        state: absent
+        name: ssh-in
+    - name: Removing security group dashboard-sg
+      openstack.cloud.security_group:
+        state: absent
+        name: dashboard-sg
+        description: security group for dashboard service
+    - name: Removing router dashboard-router
+      openstack.cloud.router:
+        state: absent
+        name: dashboard-router
+        network: public
+        interfaces:
+          - dashboard-subnet

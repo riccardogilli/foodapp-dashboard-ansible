@@ -1,6 +1,11 @@
 
 - hosts: localhost
   tasks:
+    - name: Create a keypair
+      openstack.cloud.keypair:
+        state: present
+        name: ansible_key
+        public_key_file: ./ssh_key.pub
     - name: Create a new network called dashboard-net
       openstack.cloud.network:
         name: dashboard-net

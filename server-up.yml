@@ -6,7 +6,7 @@
         state: present
         name: ubuntu
         image: ubuntu-bionic-cloudimg
-        key_name: Keypair
+        key_name: ansible_key
         timeout: 200
         flavor: m1.small
         nics:

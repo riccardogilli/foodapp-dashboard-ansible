@@ -1,0 +1,6 @@
+- hosts: localhost
+  tasks:
+    - name: Removing server
+      openstack.cloud.server:
+        state: absent
+        name: ubuntu
