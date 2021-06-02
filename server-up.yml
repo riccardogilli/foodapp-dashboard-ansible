@@ -76,5 +76,11 @@
       copy:
         src: ./.env.backend
         dest: /home/ubuntu/dashboard-backend/.env
+    - name: Install pm2
+      community.general.npm:
+        name: pm2
+        global: yes
     - name: Run dashboard backend
-      shell: cd /home/ubuntu/dashboard-backend; nohup node src/app.js </dev/null >/dev/null 2>&1 &
+      command: pm2 start src/app.js
+      args:
+        chdir: /home/ubuntu/dashboard-backend
