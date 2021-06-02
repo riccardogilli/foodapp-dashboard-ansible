@@ -5,6 +5,10 @@
       openstack.cloud.keypair:
         state: absent
         name: ansible_key
+    - name: Removing router dashboard-router
+      openstack.cloud.router:
+        state: absent
+        name: dashboard-router
     - name: Removing network dashboard-net
       openstack.cloud.network:
         name: dashboard-net
@@ -21,11 +25,3 @@
       openstack.cloud.security_group:
         state: absent
         name: dashboard-sg
-        description: security group for dashboard service
-    - name: Removing router dashboard-router
-      openstack.cloud.router:
-        state: absent
-        name: dashboard-router
-        network: public
-        interfaces:
-          - dashboard-subnet
