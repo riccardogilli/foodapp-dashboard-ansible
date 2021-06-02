@@ -12,6 +12,7 @@
         nics:
          - net-name: dashboard-net
         security_groups:
+         - dashboard-sg
          - ssh-in
         meta:
          hostname: ubuntu-test
