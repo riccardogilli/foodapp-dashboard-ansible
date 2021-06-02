@@ -16,7 +16,7 @@
     - name: Removing subnet dashboard-subnet
       openstack.cloud.subnet:
         state: absent
-        network_name: dashboard-net
+        name: dashboard-subnet
     - name: Removing security group ssh-in
       openstack.cloud.security_group:
         state: absent
