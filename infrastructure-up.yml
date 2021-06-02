@@ -42,6 +42,13 @@
         port_range_min: 80
         port_range_max: 80
         remote_ip_prefix: 0.0.0.0/0
+    - name: Adding WEB (5000) incoming rule
+      openstack.cloud.security_group_rule:
+        security_group: dashboard-sg
+        protocol: tcp
+        port_range_min: 5000
+        port_range_max: 5000
+        remote_ip_prefix: 0.0.0.0/0
     - name: Creating router for allowing connections between NVM and external network
       openstack.cloud.router:
         state: present
