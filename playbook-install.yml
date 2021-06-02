@@ -1,0 +1,59 @@
+
+- hosts: localhost
+  tasks:
+    - name: Create a new instance and attaches to a network
+      openstack.cloud.server:
+        state: present
+        name: ubuntu
+        image: ubuntu-bionic-cloudimg
+        key_name: Keypair
+        timeout: 200
+        flavor: m1.small
+        nics:
+         - net-name: dashboard-net
+        security_groups:
+         - ssh-in
+        meta:
+         hostname: ubuntu-test
+      register: my_vm
+    - name: Add VM to inventory
+      add_host:
+        name: my_openstack_vm
+        groups: openstack_vms
+        ansible_host: "{{ my_vm.server.public_v4 }}"
+    - name: Pause
+      pause:
+        seconds: 90
+
+- hosts: openstack_vms
+  remote_user: ubuntu
+  become: true
+  tasks:
+    - name: Wait for connection
+      wait_for_connection:
+
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+    - name: Install git
+      apt:
+        name: git
+        state: present
+    - name: Install curl
+      apt:
+        name: curl
+        state: present
+    - name: Download node
+      command: curl -sL https://deb.nodesource.com/setup_14.x -o node_setup.sh
+      args:
+        chdir: /home/ubuntu
+    - name: Configure node setup
+      shell: bash ./node_setup.sh
+      args:
+        chdir: /home/ubuntu
+    - name: Install node
+      apt:
+        name: nodejs
+        state: present
