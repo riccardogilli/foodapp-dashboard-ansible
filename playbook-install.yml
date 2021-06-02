@@ -66,3 +66,11 @@
         remote_src: yes
         src: /var/www/frontend/dist/
         dest: /var/www/html
+    - name: Clone dashboard backend
+      git:
+        repo: https://github.com/riccardogilli/foodapp-dashboard-backend.git
+        dest: /home/ubuntu/dashboard-backend
+    - name: Configure dashboard backend
+      copy:
+        src: ./.env.backend
+        dest: /home/ubuntu/dashboard-backend
