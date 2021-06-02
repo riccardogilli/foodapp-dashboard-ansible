@@ -63,5 +63,6 @@
         dest: /var/www/frontend
     - name: Deploy dashboard frontend
       copy:
+        remote_src: yes
         src: /var/www/frontend/dist/
         dest: /var/www/html
