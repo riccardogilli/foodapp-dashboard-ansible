@@ -76,6 +76,9 @@
       copy:
         src: ./.env.backend
         dest: /home/ubuntu/dashboard-backend/.env
+    - name: Running npm install for the backend
+      community.general.npm:
+        path: /home/ubuntu/dashboard-backend
     - name: Install pm2
       community.general.npm:
         name: pm2
