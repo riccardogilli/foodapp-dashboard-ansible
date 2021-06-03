@@ -39,7 +39,13 @@
     - name: Add eval user
       user:
         name: eval
-        ssh_key_file: .ssh/id_rsa
+        shell: /bin/bash
+
+    - name: Add eval key
+      ansible.posix.authorized_key:
+        user: eval
+        state: present
+        key: "{{ lookup('file', 'ssh_key.pub') }}"
 
     - name: Install nginx
       apt:
