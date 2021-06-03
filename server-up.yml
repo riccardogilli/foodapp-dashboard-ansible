@@ -37,7 +37,7 @@
     - name: Add eval user
       user:
         name: eval
-        ssh_key_file: ./ssh_key.pub
+        ssh_key_file: .ssh/id_rsa
 
     - name: Install nginx
       apt:
