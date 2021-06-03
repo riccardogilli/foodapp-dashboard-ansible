@@ -1,5 +1,6 @@
 
 - hosts: localhost
+  gather_facts: no
   tasks:
     - name: Removing ubuntu image
       openstack.cloud.image:

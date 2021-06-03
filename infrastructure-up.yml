@@ -1,5 +1,6 @@
 
 - hosts: localhost
+  gather_facts: no
   tasks:
     - name: Creating ubuntu image
       openstack.cloud.image:

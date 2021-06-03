@@ -1,5 +1,6 @@
 
 - hosts: localhost
+  gather_facts: no
   tasks:
     - name: Create a new server and connects it to the network (this may take some time)
       openstack.cloud.server:
@@ -28,6 +29,7 @@
     - name: Checking when the SSH server becomes available
       local_action: "wait_for port=22 host={{ my_vm.server.public_v4 }}"
 - hosts: openstack_vms
+  gather_facts: no
   remote_user: ubuntu
   become: true
   tasks:
