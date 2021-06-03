@@ -1,6 +1,13 @@
 
 - hosts: localhost
   tasks:
+    - name: Creating ubuntu image
+       openstack.cloud.image:
+        name: ubuntu-bionic-cloudimg
+        container_format: bare
+        disk_format: qcow2
+        state: present
+        filename: bionic-server-cloudimg-amd64.img
     - name: Create a keypair
       openstack.cloud.keypair:
         state: present

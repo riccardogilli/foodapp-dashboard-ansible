@@ -1,6 +1,10 @@
 
 - hosts: localhost
   tasks:
+    - name: Removing ubuntu image
+      openstack.cloud.image:
+        name: ubuntu-bionic-cloudimg
+        state: absent
     - name: Removing keypair
       openstack.cloud.keypair:
         state: absent
