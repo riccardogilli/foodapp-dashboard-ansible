@@ -2,7 +2,7 @@
 - hosts: localhost
   tasks:
     - name: Creating ubuntu image
-       openstack.cloud.image:
+      openstack.cloud.image:
         name: ubuntu-bionic-cloudimg
         container_format: bare
         disk_format: qcow2
