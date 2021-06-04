@@ -97,6 +97,6 @@
         name: pm2
         global: yes
     - name: Run dashboard backend
-      command: pm2 start src/app.js
+      command: pm2 start src/app.js --name node-backend
       args:
         chdir: /home/ubuntu/dashboard-backend
