@@ -2,6 +2,8 @@
 - hosts: localhost
   gather_facts: no
   tasks:
+    - name: Openstack authentication
+      include: auth.yml
     - name: Creating ubuntu image
       openstack.cloud.image:
         name: ubuntu-bionic-cloudimg
@@ -9,15 +11,15 @@
         disk_format: qcow2
         state: present
         filename: bionic-server-cloudimg-amd64.img
-    - name: Create a keypair
+    - name: Creating a keypair (the public key is in .ssh_key.pub)
       openstack.cloud.keypair:
         state: present
         name: ansible_key
         public_key_file: ./ssh_key.pub
-    - name: Create a new network called dashboard-net
+    - name: Creating a new network called dashboard-net
       openstack.cloud.network:
         name: dashboard-net
-    - name: Create a new subnet called dashboard-subnet
+    - name: Creating a new subnet called dashboard-subnet
       openstack.cloud.subnet:
         state: present
         network_name: dashboard-net
@@ -26,7 +28,7 @@
         dns_nameservers:
           - 1.1.1.1
           - 1.0.0.1
-    - name: Create a new security group called ssh-in
+    - name: Creating a new security group called ssh-in
       openstack.cloud.security_group:
         state: present
         name: ssh-in
@@ -38,7 +40,7 @@
         port_range_min: 22
         port_range_max: 22
         remote_ip_prefix: 0.0.0.0/0
-    - name: Create a new security group called dashboard-sg
+    - name: Creating a new security group called dashboard-sg
       openstack.cloud.security_group:
         state: present
         name: dashboard-sg
@@ -50,7 +52,7 @@
         port_range_min: 80
         port_range_max: 80
         remote_ip_prefix: 0.0.0.0/0
-    - name: Adding WEB (5000) incoming rule
+    - name: Adding WEB (5000) incoming rule (for the backend)
       openstack.cloud.security_group_rule:
         security_group: dashboard-sg
         protocol: tcp

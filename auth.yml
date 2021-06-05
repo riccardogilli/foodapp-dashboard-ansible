@@ -1,0 +1,15 @@
+- hosts: localhost
+  gather_facts: no
+  vars:
+    os_url: http://10.235.1.223/identity
+    os_username: admin
+    os_password: password
+    os_project: foodapp-dashboard
+  tasks:
+    - name: Authenticating to the Openstack server
+      openstack.cloud.auth:
+        auth:
+          auth_url: {{ os_url }}
+          username: {{ os_username }}
+          password: {{ os_password }}
+          project_name: {{ os_project }}

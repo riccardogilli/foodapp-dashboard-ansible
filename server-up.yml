@@ -2,7 +2,9 @@
 - hosts: localhost
   gather_facts: no
   tasks:
-    - name: Create a new server and connects it to the network (this may take some time)
+    - name: Openstack authentication
+      include: auth.yml
+    - name: Creating a new server and connecting it to the network dashboard-net (this may take some time)
       openstack.cloud.server:
         state: present
         name: ubuntu
@@ -18,85 +20,82 @@
         meta:
          hostname: ubuntu-test
       register: my_vm
-    - name: Add VM to inventory
+    - name: Adding VM to inventory (so I can connect to it later)
       add_host:
-        name: my_openstack_vm
-        groups: openstack_vms
+        name: dashboard_vm
+        groups: dashboard_vm
         ansible_host: "{{ my_vm.server.public_v4 }}"
-    #- name: Pause
-    #  pause:
-    #    seconds: 90
-    - name: Checking when the SSH server becomes available
+    - name: Checking when the SSH server becomes available (so I know it has been provisioned)
       local_action: "wait_for port=22 host={{ my_vm.server.public_v4 }}"
-- hosts: openstack_vms
+- hosts: dashboard_vm
   gather_facts: no
   remote_user: ubuntu
   become: true
   tasks:
-    - name: Wait for connection
+    - name: Waiting for connection to the NVM
       wait_for_connection:
 
-    - name: Add eval user
+    - name: Adding eval user
       user:
         name: eval
         shell: /bin/bash
 
-    - name: Add eval key
+    - name: Adding eval key to the eval user
       ansible.posix.authorized_key:
         user: eval
         state: present
         key: "{{ lookup('file', 'ssh_key.pub') }}"
 
-    - name: Install nginx
+    - name: Installing nginx (needed for the frontend)
       apt:
         name: nginx
         state: present
         update_cache: yes
-    - name: Install git
+    - name: Installing git
       apt:
         name: git
         state: present
-    - name: Install curl
+    - name: Installing curl (to download node sources)
       apt:
         name: curl
         state: present
-    - name: Download node
+    - name: Downloading node
       command: curl -sL https://deb.nodesource.com/setup_14.x -o node_setup.sh
       args:
         chdir: /home/ubuntu
-    - name: Configure node setup
+    - name: Configuring node setup
       shell: bash ./node_setup.sh
       args:
         chdir: /home/ubuntu
-    - name: Install node
+    - name: Installing node
       apt:
         name: nodejs
         state: present
-    - name: Clone dashboard frontend
+    - name: Cloning dashboard frontend
       git:
         repo: https://github.com/riccardogilli/foodapp-dashboard-frontend.git
         dest: /var/www/frontend
-    - name: Deploy dashboard frontend
+    - name: Deploying dashboard frontend
       copy:
         remote_src: yes
         src: /var/www/frontend/dist/
         dest: /var/www/html
-    - name: Clone dashboard backend
+    - name: Cloning dashboard backend
       git:
         repo: https://github.com/riccardogilli/foodapp-dashboard-backend.git
         dest: /home/ubuntu/dashboard-backend
-    - name: Configure dashboard backend
+    - name: Configuring dashboard backend (copying the .env.backend with the K8s paramters)
       copy:
         src: ./.env.backend
         dest: /home/ubuntu/dashboard-backend/.env
     - name: Running npm install for the backend
       community.general.npm:
         path: /home/ubuntu/dashboard-backend
-    - name: Install pm2
+    - name: Installing pm2 (to run the node backend)
       community.general.npm:
         name: pm2
         global: yes
-    - name: Run dashboard backend
+    - name: Running dashboard backend
       command: pm2 start src/app.js --name node-backend
       args:
         chdir: /home/ubuntu/dashboard-backend
