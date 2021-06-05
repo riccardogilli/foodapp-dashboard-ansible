@@ -6,6 +6,7 @@
     os_password: password
     os_project: foodapp-dashboard
     os_project_domain_name: default
+    os_user_domain_name: default
   tasks:
     - name: Authenticating to the Openstack server
       openstack.cloud.auth:
@@ -15,3 +16,4 @@
           password: "{{ os_password }}"
           project_name: "{{ os_project }}"
           project_domain_name: "{{ os_project_domain_name }}"
+          user_domain_name: "{{ os_user_domain_name }}"
