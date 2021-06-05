@@ -1,9 +1,9 @@
 
-- name: Openstack authentication
-  include: auth.yml
 - hosts: localhost
   gather_facts: no
   tasks:
+    - name: Openstack authentication
+      include_tasks: auth.yml
     - name: Removing ubuntu image
       openstack.cloud.image:
         name: ubuntu-bionic-cloudimg

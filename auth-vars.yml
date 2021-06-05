@@ -1,0 +1,6 @@
+os_url: http://10.235.1.223/identity
+os_username: admin
+os_password: password
+os_project: foodapp-dashboard
+os_project_domain_name: default
+os_user_domain_name: default

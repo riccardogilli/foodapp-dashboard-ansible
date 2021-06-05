@@ -1,19 +1,11 @@
-- hosts: localhost
-  gather_facts: no
-  vars:
-    os_url: http://10.235.1.223/identity
-    os_username: admin
-    os_password: password
-    os_project: foodapp-dashboard
-    os_project_domain_name: default
-    os_user_domain_name: default
-  tasks:
-    - name: Authenticating to the Openstack server
-      openstack.cloud.auth:
-        auth:
-          auth_url: "{{ os_url }}"
-          username: "{{ os_username }}"
-          password: "{{ os_password }}"
-          project_name: "{{ os_project }}"
-          project_domain_name: "{{ os_project_domain_name }}"
-          user_domain_name: "{{ os_user_domain_name }}"
+- name: Importing Openstack variables to login
+  include_vars: auth-vars.yml
+- name: Authenticating to the Openstack server
+  openstack.cloud.auth:
+    auth:
+      auth_url: "{{ os_url }}"
+      username: "{{ os_username }}"
+      password: "{{ os_password }}"
+      project_name: "{{ os_project }}"
+      project_domain_name: "{{ os_project_domain_name }}"
+      user_domain_name: "{{ os_user_domain_name }}"
