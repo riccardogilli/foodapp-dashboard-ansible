@@ -9,8 +9,6 @@
     OS_USER_DOMAIN_NAME: Default
     OS_PROJECT_DOMAIN_ID: default
   tasks:
-    - name: Openstack authentication
-      include_tasks: auth.yml
     - name: Removing ubuntu image
       openstack.cloud.image:
         name: ubuntu-bionic-cloudimg
