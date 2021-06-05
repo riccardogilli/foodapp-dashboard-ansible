@@ -1,11 +1,2 @@
-- name: Importing Openstack variables to login
-  include_vars: auth-vars.yml
-- name: Authenticating to the Openstack server
-  openstack.cloud.auth:
-    auth:
-      auth_url: "{{ os_url }}"
-      username: "{{ os_username }}"
-      password: "{{ os_password }}"
-      project_name: "{{ os_project }}"
-      project_domain_name: "{{ os_project_domain_name }}"
-      user_domain_name: "{{ os_user_domain_name }}"
+- name: Authenticating to Openstack server
+  shell: source ./openrc.sh
