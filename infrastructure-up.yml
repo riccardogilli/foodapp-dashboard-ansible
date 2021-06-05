@@ -15,7 +15,7 @@
         container_format: bare
         disk_format: qcow2
         state: present
-        filename: bionic-server-cloudimg-amd64.img
+        filename: ubuntu-server-cloudimg-amd64.img
     - name: Creating a keypair (the public key is in .ssh_key.pub)
       openstack.cloud.keypair:
         state: present
