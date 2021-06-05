@@ -9,7 +9,7 @@
     - name: Authenticating to the Openstack server
       openstack.cloud.auth:
         auth:
-          auth_url: {{ os_url }}
-          username: {{ os_username }}
-          password: {{ os_password }}
-          project_name: {{ os_project }}
+          auth_url: "{{ os_url }}"
+          username: "{{ os_username }}"
+          password: "{{ os_password }}"
+          project_name: "{{ os_project }}"
