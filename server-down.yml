@@ -1,8 +1,9 @@
+
+- name: Openstack authentication
+  include: auth.yml
 - hosts: localhost
   gather_facts: no
   tasks:
-    - name: Openstack authentication
-      include: auth.yml
     - name: Removing server
       openstack.cloud.server:
         state: absent

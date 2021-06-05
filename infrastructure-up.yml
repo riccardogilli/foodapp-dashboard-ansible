@@ -1,9 +1,8 @@
 
+- name: Openstack authentication
+  include: auth.yml
 - hosts: localhost
   gather_facts: no
-  tasks:
-    - name: Openstack authentication
-      include: auth.yml
     - name: Creating ubuntu image
       openstack.cloud.image:
         name: ubuntu-bionic-cloudimg

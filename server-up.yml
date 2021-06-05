@@ -1,9 +1,9 @@
 
+- name: Openstack authentication
+  include: auth.yml
 - hosts: localhost
   gather_facts: no
   tasks:
-    - name: Openstack authentication
-      include: auth.yml
     - name: Creating a new server and connecting it to the network dashboard-net (this may take some time)
       openstack.cloud.server:
         state: present
