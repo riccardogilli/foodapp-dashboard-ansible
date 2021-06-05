@@ -1,6 +1,0 @@
-auth_url: http://10.235.1.223/identity
-username: admin
-password: password
-project_name: foodapp-dashboard
-project_domain_name: default
-user_domain_name: default

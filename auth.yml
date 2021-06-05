@@ -1,2 +1,0 @@
-- name: Authenticating to Openstack server
-  shell: . ./openrc.sh

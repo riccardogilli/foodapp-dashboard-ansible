@@ -1,9 +1,14 @@
 
 - hosts: localhost
   gather_facts: no
+  environment:
+    OS_AUTH_URL: http://10.235.1.223/identity
+    OS_PROJECT_NAME: foodapp-dashboard
+    OS_USERNAME: admin
+    OS_PASSWORD: password
+    OS_USER_DOMAIN_NAME: Default
+    OS_PROJECT_DOMAIN_ID: default
   tasks:
-    - name: Openstack authentication
-      include_tasks: auth.yml
     - name: Creating a new server and connecting it to the network dashboard-net (this may take some time)
       openstack.cloud.server:
         state: present
